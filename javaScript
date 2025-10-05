@@ -1,0 +1,40 @@
+// Seleção dos elementos da página
+const statusEl = document.getElementById('status');
+const abrirBtn = document.getElementById('abrir');
+const fecharBtn = document.getElementById('fechar');
+
+// Função para atualizar o estado do sensor de chuva
+async function atualizarEstado() {
+  try {
+    // 🔧 Simulação (substitui por fetch('/api/sensor') no projeto real)
+    const dados = { chuva: Math.random() > 0.5 }; // gera valor aleatório
+
+    if (dados.chuva) {
+      statusEl.innerHTML = "🌧️ Está a chover! <strong>Varal recolhido</strong>";
+      statusEl.style.background = "#ffebee";
+    } else {
+      statusEl.innerHTML = "☀️ Tempo limpo. <strong>Varal estendido</strong>";
+      statusEl.style.background = "#e8f5e9";
+    }
+  } catch (e) {
+    statusEl.innerHTML = "Erro ao ler o sensor 😢";
+    statusEl.style.background = "#fff3e0";
+  }
+}
+
+// Controlo manual do varal (enviar comandos ao Arduino)
+abrirBtn.addEventListener('click', async () => {
+  // Exemplo real: await fetch('/api/controlo?acao=abrir');
+  statusEl.innerHTML = "☀️ Varal aberto manualmente.";
+  statusEl.style.background = "#e8f5e9";
+});
+
+fecharBtn.addEventListener('click', async () => {
+  // Exemplo real: await fetch('/api/controlo?acao=fechar');
+  statusEl.innerHTML = "🌧️ Varal fechado manualmente.";
+  statusEl.style.background = "#ffebee";
+});
+
+// Atualizar estado a cada 5 segundos
+setInterval(atualizarEstado, 5000);
+atualizarEstado();
