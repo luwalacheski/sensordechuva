@@ -1,38 +1,37 @@
 /* --- ESTILOS GERAIS E RESET BÁSICO --- */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* Fundo cinza claro para a página */
+    background-color: #f8f9fa; /* Fundo cinza muito claro */
     color: #333;
+    line-height: 1.6;
 }
 
 a {
     text-decoration: none;
-    color: #007bff; /* Azul padrão para links */
-}
-
-a:hover {
-    text-decoration: underline;
+    color: #007bff;
 }
 
 /* --- CABEÇALHO (HEADER) --- */
 header {
-    background-color: #ffffff; /* Fundo branco */
-    color: #333;
+    background-color: #ffffff;
     padding: 15px 50px;
     display: flex;
-    justify-content: space-between; /* Distribui o logo/título, navegação e carrinho */
+    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 header h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
+    color: #007bff;
 }
 
-/* NAVEGAÇÃO (NAV) */
 header nav ul {
     list-style: none;
     padding: 0;
@@ -41,126 +40,203 @@ header nav ul {
 }
 
 header nav ul li {
-    margin-left: 20px;
+    margin-left: 25px;
 }
 
 header nav ul li a {
     color: #333;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 header nav ul li a:hover {
-    color: #007bff; /* Mudar cor ao passar o mouse */
-    text-decoration: none;
+    color: #007bff;
 }
 
-/* CARRINHO */
 .carrinho a {
-    color: #007bff;
     font-weight: bold;
+    color: #dc3545; /* Cor de destaque para o carrinho */
 }
 
 /* --- CONTEÚDO PRINCIPAL (MAIN) --- */
 main {
-    padding: 20px 50px;
+    padding: 30px 50px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* BANNER PRINCIPAL */
-.banner-principal {
-    background-color: #28a745; /* Verde de destaque */
-    color: #ffffff;
-    padding: 40px;
+.apresentacao {
     text-align: center;
-    border-radius: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
-.banner-principal h2 {
-    margin-top: 0;
-    font-size: 32px;
-}
-
-.botao-cta {
-    display: inline-block;
-    background-color: #ffc107; /* Amarelo de Chamada para Ação */
+.apresentacao h2 {
+    font-size: 36px;
     color: #333;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: 15px;
-}
-
-.botao-cta:hover {
-    background-color: #e0a800;
-    text-decoration: none;
-}
-
-/* --- PRODUTOS EM DESTAQUE --- */
-.produtos-destaque {
-    display: flex; /* Para colocar os cards de produtos lado a lado */
-    gap: 20px; /* Espaçamento entre os cards */
-    justify-content: space-around; /* Distribui os itens */
-}
-
-/* CARD INDIVIDUAL DE PRODUTO */
-.produto-card {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 30%; /* Ajuste o tamanho para caber 3 por linha */
-}
-
-.produto-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
     margin-bottom: 10px;
 }
 
-.produto-card h3 {
+.slogan {
     font-size: 18px;
-    margin: 10px 0;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.imagem-varal {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* SEÇÕES DE INFORMAÇÃO */
+.secao-info {
+    padding: 30px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.secao-info h2 {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.lista-caracteristicas {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.lista-caracteristicas li {
+    background-color: #e9ecef;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+/* SEÇÃO DE COMPRA */
+.secao-compra {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.produto-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.produto-card h3 {
+    margin-top: 0;
+    font-size: 24px;
 }
 
 .produto-card .preco {
-    font-size: 22px;
-    color: #dc3545; /* Cor vermelha para o preço */
+    font-size: 32px;
+    color: #dc3545; /* Vermelho para o preço */
     font-weight: bold;
-    margin-bottom: 15px;
+    margin: 15px 0 25px 0;
 }
 
-.adicionar-carrinho {
-    background-color: #007bff; /* Botão Azul */
+.adicionar-carrinho, .botao-checkout {
+    background-color: #28a745; /* Verde de CTA */
     color: white;
     border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+    padding: 12px 25px;
     border-radius: 5px;
+    font-size: 18px;
     font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
     transition: background-color 0.3s;
 }
 
-.adicionar-carrinho:hover {
-    background-color: #0056b3;
+.adicionar-carrinho:hover, .botao-checkout:hover {
+    background-color: #1e7e34;
+}
+
+.detalhes {
+    color: #6c757d;
+    display: block;
+    margin-top: 10px;
 }
 
 /* --- RODAPÉ (FOOTER) --- */
 footer {
-    background-color: #333;
+    background-color: #343a40;
     color: #ffffff;
     text-align: center;
     padding: 20px 50px;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 footer a {
-    color: #ffffff;
-    margin: 0 5px;
+    color: #adb5bd;
 }
 
-footer a:hover {
-    color: #007bff;
+/* --- ESTILOS DO MODAL DE CARRINHO --- */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fundo preto semi-transparente */
+}
+
+.modal-conteudo {
+    background-color: #fefefe;
+    margin: 10% auto; /* Centraliza verticalmente e horizontalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.fechar-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.fechar-modal:hover,
+.fechar-modal:focus {
+    color: #000;
     text-decoration: none;
+    cursor: pointer;
+}
+
+#lista-carrinho {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
+
+#lista-carrinho li {
+    padding: 10px 0;
+    border-bottom: 1px dotted #ccc;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-carrinho {
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 10px;
+    border-top: 2px solid #333;
 }
