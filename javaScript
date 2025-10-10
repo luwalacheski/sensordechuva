@@ -1,64 +1,120 @@
 // VARIÁVEIS GLOBAIS
-let carrinho = []; // Array que vai guardar os objetos dos produtos
-const elementoContadorCarrinho = document.querySelector('.carrinho a');
+let carrinho = []; // Array que armazena os produtos
+const modal = document.getElementById('modal-carrinho');
+const listaCarrinho = document.getElementById('lista-carrinho');
+const valorTotalElemento = document.getElementById('valor-total');
+const contadorCarrinho = document.getElementById('carrinho-link');
+const fecharModal = document.querySelector('.fechar-modal');
 
-// 1. FUNÇÃO PARA ADICIONAR UM PRODUTO AO CARRINHO
+// FUNÇÃO PRINCIPAL PARA ADICIONAR UM PRODUTO
 function adicionarAoCarrinho(nome, preco) {
-    // Cria um objeto para o novo produto
-    const novoProduto = {
-        nome: nome,
-        preco: preco,
-        quantidade: 1
-    };
-
-    // Adiciona o produto ao array do carrinho
-    carrinho.push(novoProduto);
+    const precoNumero = parseFloat(preco);
     
-    // Chama a função para atualizar a interface do usuário
+    // Verifica se o produto já existe no carrinho
+    const itemExistente = carrinho.find(item => item.nome === nome);
+    
+    if (itemExistente) {
+        itemExistente.quantidade += 1;
+    } else {
+        carrinho.push({
+            nome: nome,
+            preco: precoNumero,
+            quantidade: 1
+        });
+    }
+
+    alert(`"${nome}" adicionado ao carrinho!`);
     atualizarCarrinhoUI();
-    
-    // Feedback para o usuário (opcional)
-    alert(`${nome} adicionado ao carrinho!`);
+    abrirModal(); // Abre o modal automaticamente
 }
 
-// 2. FUNÇÃO PARA ATUALIZAR O CONTADOR DO CARRINHO (UI = User Interface)
+// FUNÇÃO PARA ATUALIZAR O VISUAL DO CARRINHO E O TOTAL
 function atualizarCarrinhoUI() {
-    // Calcula o número total de itens no carrinho
-    const totalItens = carrinho.length;
+    listaCarrinho.innerHTML = ''; // Limpa a lista atual
 
-    // Atualiza o texto do link do carrinho no cabeçalho
-    // Ele mostrará: 🛒 Carrinho (2)
-    elementoContadorCarrinho.textContent = `🛒 Carrinho (${totalItens})`;
+    let totalGeral = 0;
+    let totalItens = 0;
+
+    // 1. Preenche a lista do modal
+    carrinho.forEach(item => {
+        const subtotal = item.preco * item.quantidade;
+        totalGeral += subtotal;
+        totalItens += item.quantidade;
+        
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span>${item.nome} (${item.quantidade}x)</span>
+            <span>R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+        `;
+        listaCarrinho.appendChild(li);
+    });
+
+    // 2. Atualiza o contador no cabeçalho
+    contadorCarrinho.textContent = `🛒 Carrinho (${totalItens})`;
+    
+    // 3. Atualiza o valor total no modal
+    valorTotalElemento.textContent = `R$ ${totalGeral.toFixed(2).replace('.', ',')}`;
+    
+    // Se o carrinho estiver vazio
+    if (carrinho.length === 0) {
+         listaCarrinho.innerHTML = '<li>O seu carrinho está vazio.</li>';
+    }
 }
 
+// FUNÇÕES DO MODAL
+function abrirModal() {
+    modal.style.display = "block";
+}
 
-// 3. ADICIONAR ESCUTADORES DE EVENTO AOS BOTÕES
-// Este bloco garante que o código só é executado depois que o HTML é totalmente carregado.
+function fecharModal() {
+    modal.style.display = "none";
+}
+
+// ESCUTADORES DE EVENTOS
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Seleciona todos os botões com a classe 'adicionar-carrinho'
+    // 1. Adiciona o evento de clique aos botões 'Adicionar ao Carrinho'
     const botoesAdicionar = document.querySelectorAll('.adicionar-carrinho');
-    
-    // Itera sobre cada botão encontrado
     botoesAdicionar.forEach(botao => {
         botao.addEventListener('click', () => {
-            
-            // Pega o elemento pai do botão (o 'div.produto-card')
-            const card = botao.closest('.produto-card');
-            
-            // Extrai o nome do produto (do h3)
-            const nomeProduto = card.querySelector('h3').textContent;
-            
-            // Extrai o preço (do p.preco), remove 'R$', vírgulas e transforma em número
-            let precoTexto = card.querySelector('.preco').textContent;
-            precoTexto = precoTexto.replace('R$', '').replace(',', '.').trim();
-            const precoProduto = parseFloat(precoTexto);
-            
-            // Chama a função principal para adicionar o item
-            adicionarAoCarrinho(nomeProduto, precoProduto);
+            const nome = botao.getAttribute('data-nome');
+            const preco = botao.getAttribute('data-preco');
+            adicionarAoCarrinho(nome, preco);
         });
     });
+
+    // 2. Configura a abertura e fechamento do Modal
     
-    // Inicializa o contador do carrinho ao carregar a página
+    // Ação ao clicar no ícone do carrinho no cabeçalho
+    contadorCarrinho.addEventListener('click', (e) => {
+        e.preventDefault();
+        atualizarCarrinhoUI(); // Garante que a lista está atualizada
+        abrirModal();
+    });
+    
+    // Ação ao clicar no 'x' para fechar o modal
+    fecharModal.addEventListener('click', fecharModal);
+    
+    // Ação ao clicar fora do modal
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            fecharModal();
+        }
+    });
+
+    // 3. Simula a finalização da compra
+    const botaoCheckout = document.querySelector('.botao-checkout');
+    botaoCheckout.addEventListener('click', () => {
+        if (carrinho.length > 0) {
+            alert(`Compra de Varal Tech-Dry finalizada! Total: ${valorTotalElemento.textContent}. Obrigado pela preferência!`);
+            carrinho = []; // Limpa o carrinho
+            fecharModal();
+            atualizarCarrinhoUI();
+        } else {
+            alert('Seu carrinho está vazio. Adicione um produto para finalizar a compra.');
+        }
+    });
+
+    // Inicializa o contador ao carregar a página
     atualizarCarrinhoUI();
 });
