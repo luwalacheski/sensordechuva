@@ -1,54 +1,166 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Seleciona os elementos que serão manipulados
-    const comprarBtn = document.getElementById('comprar-btn');
-    const detalhesBtn = document.getElementById('detalhes-btn');
-    const feedbackDiv = document.getElementById('feedback-mensagem');
+/* --- ESTILOS GERAIS E RESET BÁSICO --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Fundo cinza claro para a página */
+    color: #333;
+}
 
-    // 2. Função para exibir a mensagem de feedback
-    function mostrarFeedback(mensagem, tipo) {
-        // Define a mensagem e mostra a div
-        feedbackDiv.textContent = mensagem;
-        feedbackDiv.style.display = 'block';
+a {
+    text-decoration: none;
+    color: #007bff; /* Azul padrão para links */
+}
 
-        // Define a cor de fundo com base no tipo
-        if (tipo === 'compra') {
-            feedbackDiv.style.backgroundColor = '#d4edda'; // Verde claro
-            feedbackDiv.style.color = '#155724'; // Verde escuro
-        } else if (tipo === 'detalhes') {
-            feedbackDiv.style.backgroundColor = '#cce5ff'; // Azul claro
-            feedbackDiv.style.color = '#004085'; // Azul escuro
-        }
+a:hover {
+    text-decoration: underline;
+}
 
-        // Remove a mensagem após 5 segundos
-        setTimeout(() => {
-            feedbackDiv.style.display = 'none';
-        }, 5000);
-    }
+/* --- CABEÇALHO (HEADER) --- */
+header {
+    background-color: #ffffff; /* Fundo branco */
+    color: #333;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between; /* Distribui o logo/título, navegação e carrinho */
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
 
-    // 3. Adiciona o evento de clique ao botão "Comprar"
-    comprarBtn.addEventListener('click', function() {
-        // Em um site real, isso levaria para uma página de checkout
-        mostrarFeedback('🚀 Redirecionando para o carrinho de compras! Em breve o Varal Inteligente será seu.', 'compra');
-    });
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
 
-    // 4. Adiciona o evento de clique ao botão "Detalhes"
-    detalhesBtn.addEventListener('click', function() {
-        // Em um site real, isso mostraria uma seção de FAQ ou características técnicas
-        mostrarFeedback('🛠️ Você seria levado para uma página com Ficha Técnica completa, vídeos de instalação e FAQ.', 'detalhes');
-    });
+/* NAVEGAÇÃO (NAV) */
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
 
-    // 5. Exemplo de como a imagem poderia mudar com um 'mouseover' (opcional)
-    const varalImg = document.getElementById('varal-img');
-    varalImg.addEventListener('mouseover', function() {
-        // Supondo que você tenha outra imagem chamada 'varal-recolhido.jpg'
-        // varalImg.src = 'varal-recolhido.jpg';
-        // varalImg.alt = 'Varal automático recolhido';
-        console.log('Varal em modo de demonstração (recolhendo...)');
-    });
+header nav ul li {
+    margin-left: 20px;
+}
 
-    varalImg.addEventListener('mouseout', function() {
-        // varalImg.src = 'varal-automatico.jpg'; // Volta para a imagem original
-        // varalImg.alt = 'Varal automático com sensor de chuva';
-        console.log('Varal em modo de demonstração (estendendo...)');
-    });
-});
+header nav ul li a {
+    color: #333;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    color: #007bff; /* Mudar cor ao passar o mouse */
+    text-decoration: none;
+}
+
+/* CARRINHO */
+.carrinho a {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* --- CONTEÚDO PRINCIPAL (MAIN) --- */
+main {
+    padding: 20px 50px;
+}
+
+/* BANNER PRINCIPAL */
+.banner-principal {
+    background-color: #28a745; /* Verde de destaque */
+    color: #ffffff;
+    padding: 40px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.banner-principal h2 {
+    margin-top: 0;
+    font-size: 32px;
+}
+
+.botao-cta {
+    display: inline-block;
+    background-color: #ffc107; /* Amarelo de Chamada para Ação */
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.botao-cta:hover {
+    background-color: #e0a800;
+    text-decoration: none;
+}
+
+/* --- PRODUTOS EM DESTAQUE --- */
+.produtos-destaque {
+    display: flex; /* Para colocar os cards de produtos lado a lado */
+    gap: 20px; /* Espaçamento entre os cards */
+    justify-content: space-around; /* Distribui os itens */
+}
+
+/* CARD INDIVIDUAL DE PRODUTO */
+.produto-card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%; /* Ajuste o tamanho para caber 3 por linha */
+}
+
+.produto-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.produto-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.produto-card .preco {
+    font-size: 22px;
+    color: #dc3545; /* Cor vermelha para o preço */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.adicionar-carrinho {
+    background-color: #007bff; /* Botão Azul */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.adicionar-carrinho:hover {
+    background-color: #0056b3;
+}
+
+/* --- RODAPÉ (FOOTER) --- */
+footer {
+    background-color: #333;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 50px;
+    margin-top: 30px;
+}
+
+footer a {
+    color: #ffffff;
+    margin: 0 5px;
+}
+
+footer a:hover {
+    color: #007bff;
+    text-decoration: none;
+}
