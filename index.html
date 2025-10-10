@@ -3,66 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Loja Online - A Melhor Opção para Você</title>
-    </head>
+    <title>Varal Tech-Dry - Varal Automático Inteligente com Sensor de Chuva</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
 <body>
 
     <header>
-        <h1>Nome da Minha Loja</h1>
+        <h1>Varal Automático Inteligente</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="produtos.html">Produtos</a></li>
-                <li><a href="ofertas.html">Ofertas</a></li>
-                <li><a href="contato.html">Contato</a></li>
+                <li><a href="#tecnologia">Tecnologia</a></li>
+                <li><a href="#caracteristicas">Vantagens</a></li>
+                <li><a href="#comprar">Comprar</a></li>
             </ul>
         </nav>
         <div class="carrinho">
-            <a href="carrinho.html">🛒 Carrinho (0)</a>
+            <a href="#" id="carrinho-link">🛒 Carrinho (0)</a>
         </div>
     </header>
 
     <main>
-        <section class="banner-principal">
-            <h2>🎉 Grande Oferta de Lançamento!</h2>
-            <p>Frete grátis em todos os pedidos acima de R$ 99.</p>
-            <a href="ofertas.html" class="botao-cta">Ver Ofertas</a>
+        <section class="apresentacao">
+            <h2>Varal Tech-Dry com Sensor de Chuva</h2>
+            <p class="slogan">A solução perfeita para suas roupas secas, faça chuva ou faça sol!</p>
+            <img src="https://via.placeholder.com/600x300?text=IMAGEM+VARAL+AUTOMATICO" alt="Imagem do Varal Automático em ação" class="imagem-varal">
         </section>
 
-        <section class="produtos-destaque">
-            <h2>Nossos Destaques</h2>
-
-            <div class="produto-card">
-                <img src="caminho/para/imagem1.jpg" alt="Descrição do Produto 1">
-                <h3>Nome do Produto 1</h3>
-                <p class="preco">R$ 199,90</p>
-                <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="produto-card">
-                <img src="caminho/para/imagem2.jpg" alt="Descrição do Produto 2">
-                <h3>Nome do Produto 2</h3>
-                <p class="preco">R$ 59,90</p>
-                <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="produto-card">
-                <img src="caminho/para/imagem3.jpg" alt="Descrição do Produto 3">
-                <h3>Nome do Produto 3</h3>
-                <p class="preco">R$ 350,00</p>
-                <button class="adicionar-carrinho">Adicionar ao Carrinho</button>
-            </div>
-
+        <section id="tecnologia" class="secao-info">
+            <h2>Tecnologia e Conveniência</h2>
+            <p>Nunca mais se preocupe em correr para recolher suas roupas. Nosso varal usa um **sensor de alta precisão** para detectar a primeira gota de chuva e recolhe automaticamente as hastes, protegendo suas roupas em milissegundos.</p>
         </section>
+
+        <section id="caracteristicas" class="secao-info">
+            <h2>Características Principais</h2>
+            <ul class="lista-caracteristicas">
+                <li>⚡ **Sensor de Chuva Rápido:** Reage em milissegundos.</li>
+                <li>🛠️ **Instalação Simples:** Kits completos e tutoriais fáceis.</li>
+                <li>🔋 **Baixo Consumo:** Eficiência energética garantida.</li>
+                <li>⚙️ **Controle Manual:** Botão extra para estender ou recolher quando quiser.</li>
+            </ul>
+        </section>
+        
+        <section id="comprar" class="secao-compra">
+            <div class="produto-card">
+                <h3>Varal Tech-Dry</h3>
+                <p class="preco">R$ 699,90</p>
+                <button 
+                    class="adicionar-carrinho"
+                    data-nome="Varal Tech-Dry"
+                    data-preco="699.90"
+                >
+                    Quero Comprar Agora
+                </button>
+                <a href="#" class="detalhes">Ver Mais Detalhes</a>
+            </div>
+        </section>
+        
+        <div id="modal-carrinho" class="modal">
+            <div class="modal-conteudo">
+                <span class="fechar-modal">&times;</span>
+                <h3>Seu Carrinho de Compras</h3>
+                <ul id="lista-carrinho">
+                    </ul>
+                <p class="total-carrinho">Total: <span id="valor-total">R$ 0,00</span></p>
+                <button class="botao-checkout">Finalizar Compra</button>
+            </div>
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 Minha Loja Online. Todos os direitos reservados.</p>
+        <p>&copy; 2025 Varal Tech. Inovação para o seu dia a dia.</p>
         <div class="links-uteis">
-            <a href="politica.html">Política de Privacidade</a> |
-            <a href="termos.html">Termos de Uso</a>
+            <a href="#">Política de Privacidade</a> |
+            <a href="#">Termos de Uso</a>
         </div>
     </footer>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
