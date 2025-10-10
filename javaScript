@@ -1,40 +1,64 @@
-// Seleção dos elementos da página
-const statusEl = document.getElementById('status');
-const abrirBtn = document.getElementById('abrir');
-const fecharBtn = document.getElementById('fechar');
+// VARIÁVEIS GLOBAIS
+let carrinho = []; // Array que vai guardar os objetos dos produtos
+const elementoContadorCarrinho = document.querySelector('.carrinho a');
 
-// Função para atualizar o estado do sensor de chuva
-async function atualizarEstado() {
-  try {
-    // 🔧 Simulação (substitui por fetch('/api/sensor') no projeto real)
-    const dados = { chuva: Math.random() > 0.5 }; // gera valor aleatório
+// 1. FUNÇÃO PARA ADICIONAR UM PRODUTO AO CARRINHO
+function adicionarAoCarrinho(nome, preco) {
+    // Cria um objeto para o novo produto
+    const novoProduto = {
+        nome: nome,
+        preco: preco,
+        quantidade: 1
+    };
 
-    if (dados.chuva) {
-      statusEl.innerHTML = "🌧️ Está a chover! <strong>Varal recolhido</strong>";
-      statusEl.style.background = "#ffebee";
-    } else {
-      statusEl.innerHTML = "☀️ Tempo limpo. <strong>Varal estendido</strong>";
-      statusEl.style.background = "#e8f5e9";
-    }
-  } catch (e) {
-    statusEl.innerHTML = "Erro ao ler o sensor 😢";
-    statusEl.style.background = "#fff3e0";
-  }
+    // Adiciona o produto ao array do carrinho
+    carrinho.push(novoProduto);
+    
+    // Chama a função para atualizar a interface do usuário
+    atualizarCarrinhoUI();
+    
+    // Feedback para o usuário (opcional)
+    alert(`${nome} adicionado ao carrinho!`);
 }
 
-// Controlo manual do varal (enviar comandos ao Arduino)
-abrirBtn.addEventListener('click', async () => {
-  // Exemplo real: await fetch('/api/controlo?acao=abrir');
-  statusEl.innerHTML = "☀️ Varal aberto manualmente.";
-  statusEl.style.background = "#e8f5e9";
-});
+// 2. FUNÇÃO PARA ATUALIZAR O CONTADOR DO CARRINHO (UI = User Interface)
+function atualizarCarrinhoUI() {
+    // Calcula o número total de itens no carrinho
+    const totalItens = carrinho.length;
 
-fecharBtn.addEventListener('click', async () => {
-  // Exemplo real: await fetch('/api/controlo?acao=fechar');
-  statusEl.innerHTML = "🌧️ Varal fechado manualmente.";
-  statusEl.style.background = "#ffebee";
-});
+    // Atualiza o texto do link do carrinho no cabeçalho
+    // Ele mostrará: 🛒 Carrinho (2)
+    elementoContadorCarrinho.textContent = `🛒 Carrinho (${totalItens})`;
+}
 
-// Atualizar estado a cada 5 segundos
-setInterval(atualizarEstado, 5000);
-atualizarEstado();
+
+// 3. ADICIONAR ESCUTADORES DE EVENTO AOS BOTÕES
+// Este bloco garante que o código só é executado depois que o HTML é totalmente carregado.
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Seleciona todos os botões com a classe 'adicionar-carrinho'
+    const botoesAdicionar = document.querySelectorAll('.adicionar-carrinho');
+    
+    // Itera sobre cada botão encontrado
+    botoesAdicionar.forEach(botao => {
+        botao.addEventListener('click', () => {
+            
+            // Pega o elemento pai do botão (o 'div.produto-card')
+            const card = botao.closest('.produto-card');
+            
+            // Extrai o nome do produto (do h3)
+            const nomeProduto = card.querySelector('h3').textContent;
+            
+            // Extrai o preço (do p.preco), remove 'R$', vírgulas e transforma em número
+            let precoTexto = card.querySelector('.preco').textContent;
+            precoTexto = precoTexto.replace('R$', '').replace(',', '.').trim();
+            const precoProduto = parseFloat(precoTexto);
+            
+            // Chama a função principal para adicionar o item
+            adicionarAoCarrinho(nomeProduto, precoProduto);
+        });
+    });
+    
+    // Inicializa o contador do carrinho ao carregar a página
+    atualizarCarrinhoUI();
+});
