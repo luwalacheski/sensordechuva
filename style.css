@@ -1,140 +1,54 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f7f6;
-    color: #333;
-    line-height: 1.6;
-}
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Seleciona os elementos que serão manipulados
+    const comprarBtn = document.getElementById('comprar-btn');
+    const detalhesBtn = document.getElementById('detalhes-btn');
+    const feedbackDiv = document.getElementById('feedback-mensagem');
 
-header {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+    // 2. Função para exibir a mensagem de feedback
+    function mostrarFeedback(mensagem, tipo) {
+        // Define a mensagem e mostra a div
+        feedbackDiv.textContent = mensagem;
+        feedbackDiv.style.display = 'block';
 
-header h1 {
-    margin-bottom: 5px;
-}
+        // Define a cor de fundo com base no tipo
+        if (tipo === 'compra') {
+            feedbackDiv.style.backgroundColor = '#d4edda'; // Verde claro
+            feedbackDiv.style.color = '#155724'; // Verde escuro
+        } else if (tipo === 'detalhes') {
+            feedbackDiv.style.backgroundColor = '#cce5ff'; // Azul claro
+            feedbackDiv.style.color = '#004085'; // Azul escuro
+        }
 
-main {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 0 20px;
-}
-
-#produto-info {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-}
-
-.produto-container {
-    display: flex;
-    gap: 30px;
-    align-items: flex-start;
-}
-
-#varal-img {
-    width: 40%;
-    max-width: 350px;
-    height: auto;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.descricao {
-    width: 60%;
-}
-
-.descricao h3 {
-    color: #4CAF50;
-    margin-top: 0;
-}
-
-.feature {
-    font-weight: bold;
-    color: #00796B; /* Azul-petróleo */
-}
-
-.preco {
-    font-size: 1.5em;
-    color: #FF5722; /* Laranja */
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-/* --- Botões de Ação --- */
-#botoes-acao {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.btn-principal, .btn-secundario {
-    padding: 15px 30px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-}
-
-.btn-principal {
-    background-color: #FFC107; /* Amarelo (Compra) */
-    color: #333;
-}
-
-.btn-principal:hover {
-    background-color: #FFEB3B;
-}
-
-.btn-secundario {
-    background-color: #2196F3; /* Azul (Detalhes) */
-    color: white;
-}
-
-.btn-secundario:hover {
-    background-color: #03A9F4;
-}
-
-/* Feedback */
-#feedback-mensagem {
-    padding: 15px;
-    margin-top: 20px;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Rodapé */
-footer {
-    text-align: center;
-    padding: 15px 0;
-    background-color: #333;
-    color: white;
-    font-size: 0.9em;
-}
-
-/* Responsividade básica para telas menores */
-@media (max-width: 768px) {
-    .produto-container {
-        flex-direction: column;
+        // Remove a mensagem após 5 segundos
+        setTimeout(() => {
+            feedbackDiv.style.display = 'none';
+        }, 5000);
     }
 
-    #varal-img, .descricao {
-        width: 100%;
-        max-width: 100%;
-    }
+    // 3. Adiciona o evento de clique ao botão "Comprar"
+    comprarBtn.addEventListener('click', function() {
+        // Em um site real, isso levaria para uma página de checkout
+        mostrarFeedback('🚀 Redirecionando para o carrinho de compras! Em breve o Varal Inteligente será seu.', 'compra');
+    });
 
-    .btn-principal, .btn-secundario {
-        display: block;
-        width: 80%;
-        margin: 10px auto;
-    }
-}
+    // 4. Adiciona o evento de clique ao botão "Detalhes"
+    detalhesBtn.addEventListener('click', function() {
+        // Em um site real, isso mostraria uma seção de FAQ ou características técnicas
+        mostrarFeedback('🛠️ Você seria levado para uma página com Ficha Técnica completa, vídeos de instalação e FAQ.', 'detalhes');
+    });
+
+    // 5. Exemplo de como a imagem poderia mudar com um 'mouseover' (opcional)
+    const varalImg = document.getElementById('varal-img');
+    varalImg.addEventListener('mouseover', function() {
+        // Supondo que você tenha outra imagem chamada 'varal-recolhido.jpg'
+        // varalImg.src = 'varal-recolhido.jpg';
+        // varalImg.alt = 'Varal automático recolhido';
+        console.log('Varal em modo de demonstração (recolhendo...)');
+    });
+
+    varalImg.addEventListener('mouseout', function() {
+        // varalImg.src = 'varal-automatico.jpg'; // Volta para a imagem original
+        // varalImg.alt = 'Varal automático com sensor de chuva';
+        console.log('Varal em modo de demonstração (estendendo...)');
+    });
+});
