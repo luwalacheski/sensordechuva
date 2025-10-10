@@ -1,34 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Varal Automático com Arduino</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varal Automático Inteligente</title>
+    <link rel="stylesheet" href="styles.css"> </head>
 <body>
-  <header>
-    <h1>Varal Automático com Arduino</h1>
-  </header>
 
-  <main>
-    <section class="status-section">
-      <h2>Estado do Sistema</h2>
-      <div class="status" id="status">A verificar o sensor...</div>
-    </section>
+    <header>
+        <h1>Varal Automático Inteligente</h1>
+        <p>A solução perfeita para suas roupas secas, faça chuva ou faça sol!</p>
+    </header>
 
-    <section class="control-section">
-      <h2>Controlo Manual</h2>
-      <button id="abrir">Abrir Varal</button>
-      <button id="fechar">Fechar Varal</button>
-    </section>
-  </main>
+    <main>
+        <section id="produto-info">
+            <h2>Tecnologia e Conveniência</h2>
+            <div class="produto-container">
+                <img src="varal-automatico.jpg" alt="Varal automático com sensor de chuva" id="varal-img">
+                <div class="descricao">
+                    <h3>Varal Tech-Dry com Sensor de Chuva</h3>
+                    <p>Nunca mais se preocupe em correr para recolher suas roupas. Nosso varal usa um **sensor de alta precisão** para detectar a primeira gota de chuva e recolhe automaticamente as hastes, protegendo suas roupas.</p>
+                    <ul>
+                        <li><span class="feature">⚡ Sensor de Chuva Rápido</span>: Reage em milissegundos.</li>
+                        <li><span class="feature">🛠️ Instalação Simples</span>: Kits completos e tutoriais fáceis.</li>
+                        <li><span class="feature">🔋 Baixo Consumo</span>: Eficiência energética garantida.</li>
+                        <li><span class="feature">📱 Controle Manual</span>: Botão extra para estender ou recolher quando quiser.</li>
+                    </ul>
+                    <p class="preco">Preço: R$ 899,90</p>
+                </div>
+            </div>
+        </section>
 
-  <footer>
-    Desenvolvido por Luana Walacheski 
-    <a href="https://gptonline.ai/" target="_blank">gptonline.ai</a>
-  </footer>
+        <section id="botoes-acao">
+            <button id="comprar-btn" class="btn-principal">🛒 Quero Comprar Agora</button>
+            <button id="detalhes-btn" class="btn-secundario">🔍 Ver Mais Detalhes</button>
+        </section>
 
-  <script src="script.js"></script>
-</body>
+        <div id="feedback-mensagem" style="display:none;"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Varal Tech. Inovação para o seu dia a dia.</p>
+    </footer>
+
+    <script src="script.js"></script> </body>
 </html>
