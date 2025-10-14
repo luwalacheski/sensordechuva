@@ -1,120 +1,34 @@
-// VARIÁVEIS GLOBAIS
-let carrinho = []; // Array que armazena os produtos
-const modal = document.getElementById('modal-carrinho');
-const listaCarrinho = document.getElementById('lista-carrinho');
-const valorTotalElemento = document.getElementById('valor-total');
-const contadorCarrinho = document.getElementById('carrinho-link');
-const fecharModal = document.querySelector('.fechar-modal');
+let carrinho = [];
+let total = 0;
 
-// FUNÇÃO PRINCIPAL PARA ADICIONAR UM PRODUTO
 function adicionarAoCarrinho(nome, preco) {
-    const precoNumero = parseFloat(preco);
-    
-    // Verifica se o produto já existe no carrinho
-    const itemExistente = carrinho.find(item => item.nome === nome);
-    
-    if (itemExistente) {
-        itemExistente.quantidade += 1;
-    } else {
-        carrinho.push({
-            nome: nome,
-            preco: precoNumero,
-            quantidade: 1
-        });
-    }
+  carrinho.push({ nome, preco });
+  total += preco;
 
-    alert(`"${nome}" adicionado ao carrinho!`);
-    atualizarCarrinhoUI();
-    abrirModal(); // Abre o modal automaticamente
+  atualizarCarrinho();
 }
 
-// FUNÇÃO PARA ATUALIZAR O VISUAL DO CARRINHO E O TOTAL
-function atualizarCarrinhoUI() {
-    listaCarrinho.innerHTML = ''; // Limpa a lista atual
+function atualizarCarrinho() {
+  const itensCarrinho = document.getElementById('itensCarrinho');
+  const totalCarrinho = document.getElementById('totalCarrinho');
 
-    let totalGeral = 0;
-    let totalItens = 0;
+  itensCarrinho.innerHTML = ''; // Limpa o carrinho
+  carrinho.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
+    itensCarrinho.appendChild(li);
+  });
 
-    // 1. Preenche a lista do modal
-    carrinho.forEach(item => {
-        const subtotal = item.preco * item.quantidade;
-        totalGeral += subtotal;
-        totalItens += item.quantidade;
-        
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <span>${item.nome} (${item.quantidade}x)</span>
-            <span>R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
-        `;
-        listaCarrinho.appendChild(li);
-    });
-
-    // 2. Atualiza o contador no cabeçalho
-    contadorCarrinho.textContent = `🛒 Carrinho (${totalItens})`;
-    
-    // 3. Atualiza o valor total no modal
-    valorTotalElemento.textContent = `R$ ${totalGeral.toFixed(2).replace('.', ',')}`;
-    
-    // Se o carrinho estiver vazio
-    if (carrinho.length === 0) {
-         listaCarrinho.innerHTML = '<li>O seu carrinho está vazio.</li>';
-    }
+  totalCarrinho.textContent = `Total: R$ ${total.toFixed(2)}`;
 }
 
-// FUNÇÕES DO MODAL
-function abrirModal() {
-    modal.style.display = "block";
+function finalizarCompra() {
+  if (carrinho.length === 0) {
+    alert('Seu carrinho está vazio!');
+  } else {
+    alert('Compra finalizada com sucesso! Total: R$ ' + total.toFixed(2));
+    carrinho = [];
+    total = 0;
+    atualizarCarrinho();
+  }
 }
-
-function fecharModal() {
-    modal.style.display = "none";
-}
-
-// ESCUTADORES DE EVENTOS
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Adiciona o evento de clique aos botões 'Adicionar ao Carrinho'
-    const botoesAdicionar = document.querySelectorAll('.adicionar-carrinho');
-    botoesAdicionar.forEach(botao => {
-        botao.addEventListener('click', () => {
-            const nome = botao.getAttribute('data-nome');
-            const preco = botao.getAttribute('data-preco');
-            adicionarAoCarrinho(nome, preco);
-        });
-    });
-
-    // 2. Configura a abertura e fechamento do Modal
-    
-    // Ação ao clicar no ícone do carrinho no cabeçalho
-    contadorCarrinho.addEventListener('click', (e) => {
-        e.preventDefault();
-        atualizarCarrinhoUI(); // Garante que a lista está atualizada
-        abrirModal();
-    });
-    
-    // Ação ao clicar no 'x' para fechar o modal
-    fecharModal.addEventListener('click', fecharModal);
-    
-    // Ação ao clicar fora do modal
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            fecharModal();
-        }
-    });
-
-    // 3. Simula a finalização da compra
-    const botaoCheckout = document.querySelector('.botao-checkout');
-    botaoCheckout.addEventListener('click', () => {
-        if (carrinho.length > 0) {
-            alert(`Compra de Varal Tech-Dry finalizada! Total: ${valorTotalElemento.textContent}. Obrigado pela preferência!`);
-            carrinho = []; // Limpa o carrinho
-            fecharModal();
-            atualizarCarrinhoUI();
-        } else {
-            alert('Seu carrinho está vazio. Adicione um produto para finalizar a compra.');
-        }
-    });
-
-    // Inicializa o contador ao carregar a página
-    atualizarCarrinhoUI();
-});
