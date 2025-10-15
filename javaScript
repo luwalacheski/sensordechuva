@@ -9,7 +9,7 @@ function saveCart() {
   localStorage.setItem('cart_demo', JSON.stringify(cart));
 }
 
-// Renderiza o carrinho nas páginas que possuem o elemento
+// Renderiza o carrinho
 function renderCart() {
   const cartListEl = document.getElementById('cart-list');
   const cartTotalEl = document.getElementById('cart-total');
@@ -23,40 +23,44 @@ function renderCart() {
   }
 
   let total = 0;
-  cart.forEach(i => {
-    total += i.price * i.q;
+  cart.forEach(item => {
+    total += item.price * item.q;
     const row = document.createElement('div');
     row.className = 'cart-row';
     row.innerHTML = `
       <div>
-        <div style="font-weight:600">${i.name}</div>
-        <div class="small">${i.q} x ${formatPrice(i.price)}</div>
+        <div style="font-weight:600">${item.name}</div>
+        <div class="small">${item.q} x ${formatPrice(item.price)}</div>
       </div>
       <div style="text-align:right">
-        <div style="margin-bottom:6px">${formatPrice(i.price * i.q)}</div>
+        <div style="margin-bottom:6px">${formatPrice(item.price * item.q)}</div>
         <div>
-          <button class="btn ghost" onclick="changeQty(${i.id},-1)">-</button>
-          <button class="btn ghost" onclick="changeQty(${i.id},1)">+</button>
-          <button class="btn ghost" onclick="removeFromCart(${i.id})">Remover</button>
+          <button class="btn ghost" onclick="changeQty(${item.id}, -1)">-</button>
+          <button class="btn ghost" onclick="changeQty(${item.id}, 1)">+</button>
+          <button class="btn ghost" onclick="removeFromCart(${item.id})">Remover</button>
         </div>
       </div>
     `;
     cartListEl.appendChild(row);
   });
+
   cartTotalEl.textContent = formatPrice(total);
 }
 
 function changeQty(id, delta) {
-  const it = cart.find(c => c.id === id);
+  // Converter id para número, caso venha como string
+  id = Number(id);
+  const it = cart.find(c => Number(c.id) === id);
   if (!it) return;
   it.q += delta;
-  if (it.q < 1) cart = cart.filter(c => c.id !== id);
+  if (it.q < 1) cart = cart.filter(c => Number(c.id) !== id);
   saveCart();
   renderCart();
 }
 
 function removeFromCart(id) {
-  cart = cart.filter(i => i.id !== id);
+  id = Number(id);
+  cart = cart.filter(i => Number(i.id) !== id);
   saveCart();
   renderCart();
 }
@@ -66,6 +70,7 @@ const checkoutForm = document.getElementById('checkout-form');
 if (checkoutForm) {
   checkoutForm.addEventListener('submit', ev => {
     ev.preventDefault();
+
     const nome = document.getElementById('nome').value.trim();
     const cpf = document.getElementById('cpf').value.trim();
     const telefone = document.getElementById('telefone').value.trim();
@@ -75,6 +80,11 @@ if (checkoutForm) {
 
     if (!nome || !cpf || !telefone || !endereco || !cidade || !cep) {
       alert('Preencha todos os campos.');
+      return;
+    }
+
+    if (cart.length === 0) {
+      alert('Carrinho vazio.');
       return;
     }
 
@@ -95,17 +105,19 @@ if (checkoutForm) {
     renderCart();
 
     const result = document.getElementById('order-result');
-    result.innerHTML = `<div style="padding:12px;border-radius:10px;background:#ecfdf5;color:#065f46">
-      <strong>Pedido enviado!</strong><div>ID: ${order.id}</div>
-      <div>Total: ${formatPrice(order.total)}</div></div>`;
+    if (result) {
+      result.innerHTML = `<div style="padding:12px;border-radius:10px;background:#ecfdf5;color:#065f46">
+        <strong>Pedido enviado!</strong><div>ID: ${order.id}</div>
+        <div>Total: ${formatPrice(order.total)}</div></div>`;
+    }
 
     alert('Pedido realizado com sucesso! ID: ' + order.id);
   });
 }
 
-// Expor funções globais
+// Expor funções globalmente
 window.changeQty = changeQty;
 window.removeFromCart = removeFromCart;
 
-// Inicializa carrinho nas páginas compatíveis
+// Inicializa carrinho
 document.addEventListener('DOMContentLoaded', renderCart);
