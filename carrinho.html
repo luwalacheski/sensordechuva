@@ -6,6 +6,16 @@
   <title>VaralAuto - Carrinho</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
+  <style>
+    /* Estilo dos formulários */
+    .carrinho-container { max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background: #f9f9f9; }
+    label { display: block; margin-top: 10px; }
+    input { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
+    button { margin-top: 15px; padding: 10px; width: 100%; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    #mensagem, #mensagem-sucesso { color: green; margin-top: 10px; display: none; }
+    h3 { margin-top: 20px; }
+  </style>
 </head>
 <body>
 
@@ -22,12 +32,13 @@
 </header>
 
 <main>
-  <section id="carrinho">
+  <section id="carrinho" class="carrinho-container">
     <h2>Seu Carrinho</h2>
     <div class="carrinho-lista" id="listaCarrinho">Nenhum item adicionado.</div>
     <div class="total" id="totalCarrinho">Total: R$ 0,00</div>
 
-    <h3>Finalizar Compra</h3>
+    <!-- Formulário de dados pessoais -->
+    <h3>Finalizar Compra - Dados Pessoais</h3>
     <form id="formCompra">
       <label>Nome Completo:
         <input type="text" id="nome" required>
@@ -38,14 +49,56 @@
       <label>Endereço:
         <input type="text" id="endereco" required placeholder="Rua, número, bairro">
       </label>
-      <button class="btn" type="submit">Finalizar Compra</button>
+      <button class="btn" type="submit">Continuar para Pagamento</button>
     </form>
-    <div id="mensagem"></div>
+    <div id="mensagem">Dados salvos com sucesso!</div>
+
+    <!-- Formulário de pagamento -->
+    <h3>Pagamento</h3>
+    <form id="pagamento-form">
+      <label for="nomeCartao">Nome no cartão:</label>
+      <input type="text" id="nomeCartao" name="nomeCartao" required>
+
+      <label for="numero">Número do cartão:</label>
+      <input type="text" id="numero" name="numero" maxlength="16" required>
+
+      <label for="validade">Validade (MM/AA):</label>
+      <input type="text" id="validade" name="validade" maxlength="5" placeholder="MM/AA" required>
+
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" name="cvv" maxlength="3" required>
+
+      <button type="submit">Finalizar Pagamento</button>
+    </form>
+    <p id="mensagem-sucesso">Pagamento realizado com sucesso!</p>
   </section>
 </main>
 
 <footer>
   © 2025 VaralAuto — Sistema de varal automático com sensor de chuva.
 </footer>
+
+<script>
+  // Formulário de dados pessoais
+  const formCompra = document.getElementById('formCompra');
+  const mensagem = document.getElementById('mensagem');
+
+  formCompra.addEventListener('submit', function(e) {
+    e.preventDefault();
+    mensagem.style.display = 'block';
+    formCompra.reset();
+  });
+
+  // Formulário de pagamento
+  const formPagamento = document.getElementById('pagamento-form');
+  const mensagemSucesso = document.getElementById('mensagem-sucesso');
+
+  formPagamento.addEventListener('submit', function(e) {
+    e.preventDefault();
+    mensagemSucesso.style.display = 'block';
+    formPagamento.reset();
+  });
+</script>
+
 </body>
 </html>
