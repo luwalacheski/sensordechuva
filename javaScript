@@ -1,209 +1,111 @@
-// =======================
-// Dados de produtos
-// =======================
-const products = [
-  {
-    id: 1,
-    name: "VaralAuto Compact",
-    price: 249.90,
-    desc: "Modelo básico, ideal para apartamentos e áreas pequenas.",
-    img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=60"
-  },
-  {
-    id: 2,
-    name: "VaralAuto Pro",
-    price: 399.90,
-    desc: "Motor mais potente, inclui sensores e limit switches.",
-    img: "https://images.unsplash.com/photo-1581579182437-1f2b5a0f0c92?auto=format&fit=crop&w=800&q=60"
-  },
-  {
-    id: 3,
-    name: "Kit DIY (sensor + código)",
-    price: 99.90,
-    desc: "Kit para makers que desejam montar o sistema com seu próprio varal.",
-    img: "https://images.unsplash.com/photo-1581091870609-7fd6a1777f3b?auto=format&fit=crop&w=800&q=60"
-  }
-];
-
-// =======================
-// Carrinho - estado e renderização
-// =======================
-let cart = JSON.parse(localStorage.getItem("cart_demo") || "[]");
+// Estado do carrinho
+let cart = JSON.parse(localStorage.getItem('cart_demo') || '[]');
 
 function formatPrice(v) {
-  return "R$ " + v.toFixed(2).replace(".", ",");
+  return 'R$ ' + v.toFixed(2).replace('.', ',');
 }
 
 function saveCart() {
-  localStorage.setItem("cart_demo", JSON.stringify(cart));
+  localStorage.setItem('cart_demo', JSON.stringify(cart));
 }
 
-function renderProducts() {
-  const list = document.getElementById("product-list");
-  if (!list) return;
-  list.innerHTML = "";
-  products.forEach((p) => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
-      <img src="${p.img}" alt="${p.name}" />
-      <h3>${p.name}</h3>
-      <div class="small">${p.desc}</div>
-      <div class="meta">
-        <div style="font-weight:700">${formatPrice(p.price)}</div>
-        <button class="btn" onclick="addToCart(${p.id})">Adicionar</button>
-      </div>
-    `;
-    list.appendChild(div);
-  });
-}
-
+// Renderiza o carrinho nas páginas que possuem o elemento
 function renderCart() {
-  const cartList = document.getElementById("cart-list");
-  const cartTotal = document.getElementById("cart-total");
-  if (!cartList || !cartTotal) return;
+  const cartListEl = document.getElementById('cart-list');
+  const cartTotalEl = document.getElementById('cart-total');
+  if (!cartListEl || !cartTotalEl) return;
 
-  cartList.innerHTML = "";
+  cartListEl.innerHTML = '';
   if (cart.length === 0) {
-    cartList.innerHTML = '<div class="small">Carrinho vazio</div>';
-    cartTotal.textContent = "R$ 0,00";
+    cartListEl.innerHTML = '<div class="small">Carrinho vazio</div>';
+    cartTotalEl.textContent = 'R$ 0,00';
     return;
   }
 
   let total = 0;
-  cart.forEach((item) => {
-    total += item.price * item.q;
-    const row = document.createElement("div");
-    row.className = "cart-row";
+  cart.forEach(i => {
+    total += i.price * i.q;
+    const row = document.createElement('div');
+    row.className = 'cart-row';
     row.innerHTML = `
       <div>
-        <div style="font-weight:600">${item.name}</div>
-        <div class="small">${item.q} x ${formatPrice(item.price)}</div>
+        <div style="font-weight:600">${i.name}</div>
+        <div class="small">${i.q} x ${formatPrice(i.price)}</div>
       </div>
       <div style="text-align:right">
-        <div style="margin-bottom:6px">${formatPrice(item.price * item.q)}</div>
+        <div style="margin-bottom:6px">${formatPrice(i.price * i.q)}</div>
         <div>
-          <button class="btn ghost" onclick="changeQty(${item.id}, -1)">-</button>
-          <button class="btn ghost" onclick="changeQty(${item.id}, 1)">+</button>
-          <button class="btn ghost" onclick="removeFromCart(${item.id})">Remover</button>
+          <button class="btn ghost" onclick="changeQty(${i.id},-1)">-</button>
+          <button class="btn ghost" onclick="changeQty(${i.id},1)">+</button>
+          <button class="btn ghost" onclick="removeFromCart(${i.id})">Remover</button>
         </div>
       </div>
     `;
-    cartList.appendChild(row);
+    cartListEl.appendChild(row);
   });
-
-  cartTotal.textContent = formatPrice(total);
+  cartTotalEl.textContent = formatPrice(total);
 }
 
-function addToCart(id) {
-  const product = products.find((p) => p.id === id);
-  if (!product) return;
-  const existing = cart.find((c) => c.id === id);
-  if (existing) existing.q++;
-  else cart.push({ id: product.id, name: product.name, price: product.price, q: 1 });
+function changeQty(id, delta) {
+  const it = cart.find(c => c.id === id);
+  if (!it) return;
+  it.q += delta;
+  if (it.q < 1) cart = cart.filter(c => c.id !== id);
   saveCart();
   renderCart();
 }
 
 function removeFromCart(id) {
-  cart = cart.filter((i) => i.id !== id);
+  cart = cart.filter(i => i.id !== id);
   saveCart();
   renderCart();
 }
 
-function changeQty(id, delta) {
-  const item = cart.find((c) => c.id === id);
-  if (!item) return;
-  item.q += delta;
-  if (item.q < 1) cart = cart.filter((c) => c.id !== id);
-  saveCart();
-  renderCart();
-}
-
-// =======================
 // Checkout
-// =======================
-function validateCPF(cpf) {
-  cpf = (cpf || "").replace(/\D/g, "");
-  if (cpf.length !== 11) return false;
-  if (/^(\d)\1+$/.test(cpf)) return false;
-  const calc = (t) => {
-    let s = 0;
-    for (let i = 0; i < t; i++) s += parseInt(cpf.charAt(i)) * ((t + 1) - i);
-    let r = 11 - (s % 11);
-    return r > 9 ? 0 : r;
-  };
-  return calc(9) === parseInt(cpf.charAt(9)) && calc(10) === parseInt(cpf.charAt(10));
-}
+const checkoutForm = document.getElementById('checkout-form');
+if (checkoutForm) {
+  checkoutForm.addEventListener('submit', ev => {
+    ev.preventDefault();
+    const nome = document.getElementById('nome').value.trim();
+    const cpf = document.getElementById('cpf').value.trim();
+    const telefone = document.getElementById('telefone').value.trim();
+    const endereco = document.getElementById('endereco').value.trim();
+    const cidade = document.getElementById('cidade').value.trim();
+    const cep = document.getElementById('cep').value.trim();
 
-function maskPhone(v) {
-  return v.replace(/\D/g, "")
-    .replace(/(\d{2})(\d)/, "($1) $2")
-    .replace(/(\d{5})(\d)/, "$1-$2")
-    .substr(0, 15);
-}
-
-function maskCEP(v) {
-  return v.replace(/\D/g, "")
-    .replace(/(\d{5})(\d)/, "$1-$2")
-    .substr(0, 9);
-}
-
-function initCheckout() {
-  const form = document.getElementById("checkout-form");
-  if (!form) return;
-
-  const telefone = document.getElementById("telefone");
-  const cep = document.getElementById("cep");
-
-  telefone?.addEventListener("input", (e) => e.target.value = maskPhone(e.target.value));
-  cep?.addEventListener("input", (e) => e.target.value = maskCEP(e.target.value));
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const nome = document.getElementById("nome").value.trim();
-    const cpf = document.getElementById("cpf").value.trim();
-    const endereco = document.getElementById("endereco").value.trim();
-    const cidade = document.getElementById("cidade").value.trim();
-
-    if (!nome || !cpf || !endereco || !cidade) {
-      alert("Preencha todos os campos.");
-      return;
-    }
-
-    if (!validateCPF(cpf)) {
-      alert("CPF inválido!");
+    if (!nome || !cpf || !telefone || !endereco || !cidade || !cep) {
+      alert('Preencha todos os campos.');
       return;
     }
 
     const order = {
-      id: "ORD-" + Date.now(),
+      id: 'ORD-' + Date.now(),
+      customer: { nome, cpf, telefone, endereco, cidade, cep },
       items: cart,
-      total: cart.reduce((sum, i) => sum + i.price * i.q, 0)
+      total: cart.reduce((s, i) => s + i.price * i.q, 0),
+      date: new Date().toISOString()
     };
 
-    const orders = JSON.parse(localStorage.getItem("orders_demo") || "[]");
+    const orders = JSON.parse(localStorage.getItem('orders_demo') || '[]');
     orders.push(order);
-    localStorage.setItem("orders_demo", JSON.stringify(orders));
+    localStorage.setItem('orders_demo', JSON.stringify(orders));
 
     cart = [];
     saveCart();
-    alert(`Pedido ${order.id} realizado com sucesso! Total: ${formatPrice(order.total)}`);
-    form.reset();
+    renderCart();
+
+    const result = document.getElementById('order-result');
+    result.innerHTML = `<div style="padding:12px;border-radius:10px;background:#ecfdf5;color:#065f46">
+      <strong>Pedido enviado!</strong><div>ID: ${order.id}</div>
+      <div>Total: ${formatPrice(order.total)}</div></div>`;
+
+    alert('Pedido realizado com sucesso! ID: ' + order.id);
   });
 }
 
-// =======================
-// Inicialização
-// =======================
-window.addEventListener("DOMContentLoaded", () => {
-  renderProducts();
-  renderCart();
-  initCheckout();
-});
-
-// Expor globalmente
-window.addToCart = addToCart;
-window.removeFromCart = removeFromCart;
+// Expor funções globais
 window.changeQty = changeQty;
+window.removeFromCart = removeFromCart;
+
+// Inicializa carrinho nas páginas compatíveis
+document.addEventListener('DOMContentLoaded', renderCart);
