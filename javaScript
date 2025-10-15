@@ -19,18 +19,16 @@ function saveCart() {
 function renderCart() {
   const cartListEl = document.getElementById('cart-list');
   const cartTotalEl = document.getElementById('cart-total');
-  if (!cartListEl || !cartTotalEl) return; // se não houver elementos, não faz nada
+  if (!cartListEl || !cartTotalEl) return;
 
   cartListEl.innerHTML = '';
 
-  // Se carrinho estiver vazio
   if (cart.length === 0) {
     cartListEl.innerHTML = '<div class="small">Carrinho vazio</div>';
     cartTotalEl.textContent = 'R$ 0,00';
     return;
   }
 
-  // Monta a lista de produtos
   let total = 0;
   cart.forEach(item => {
     total += item.price * item.q;
@@ -54,7 +52,6 @@ function renderCart() {
     cartListEl.appendChild(row);
   });
 
-  // Atualiza total
   cartTotalEl.textContent = formatPrice(total);
 }
 
@@ -98,7 +95,6 @@ if (checkoutForm) {
     const cidade = document.getElementById('cidade').value.trim();
     const cep = document.getElementById('cep').value.trim();
 
-    // Validação básica
     if (!nome || !cpf || !telefone || !endereco || !cidade || !cep) {
       alert('Preencha todos os campos.');
       return;
@@ -109,7 +105,6 @@ if (checkoutForm) {
       return;
     }
 
-    // Monta pedido
     const order = {
       id: 'ORD-' + Date.now(),
       customer: { nome, cpf, telefone, endereco, cidade, cep },
@@ -118,7 +113,6 @@ if (checkoutForm) {
       date: new Date().toISOString()
     };
 
-    // Salva pedido no localStorage
     const orders = JSON.parse(localStorage.getItem('orders_demo') || '[]');
     orders.push(order);
     localStorage.setItem('orders_demo', JSON.stringify(orders));
@@ -128,18 +122,17 @@ if (checkoutForm) {
     saveCart();
     renderCart();
 
-    // Mostra resultado do pedido
+    // Mostra mensagem de sucesso na página
     const result = document.getElementById('order-result');
     if (result) {
       result.innerHTML = `
-        <div style="padding:12px;border-radius:10px;background:#ecfdf5;color:#065f46">
-          <strong>Pedido enviado!</strong>
-          <div>ID: ${order.id}</div>
-          <div>Total: ${formatPrice(order.total)}</div>
+        <div style="padding:12px;border-radius:10px;background:#ecfdf5;color:#065f46;font-weight:bold;text-align:center;">
+          Obrigado pela preferência!<br>
+          Pedido finalizado.<br>
+          ID do pedido: ${order.id}<br>
+          Total: ${formatPrice(order.total)}
         </div>`;
     }
-
-    alert('Pedido realizado com sucesso! ID: ' + order.id);
   });
 }
 
