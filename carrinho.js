@@ -1,5 +1,32 @@
 // =========================
-// CARRINHO DE COMPRAS
+// PRODUTOS DISPONÍVEIS
+// =========================
+const products = [
+  {
+    id: 1,
+    name: "VaralAuto Compact",
+    price: 249.90,
+    description: "Módulo sensor de chuva FC-37, detecta gotas de água e aciona sistemas automáticos.",
+    image: "images/varalauto-compact.png"
+  },
+  {
+    id: 2,
+    name: "VaralAuto Pro",
+    price: 399.90,
+    description: "Sensor de chuva com Arduino Nano, display LCD e buzzer para alertas.",
+    image: "images/varalauto-pro.png"
+  },
+  {
+    id: 3,
+    name: "Kit DIY (sensor + código)",
+    price: 99.90,
+    description: "Sistema completo com Arduino Uno, relé e sensor FC-37, ideal para projetos domésticos.",
+    image: "images/kit-diy.png"
+  }
+];
+
+// =========================
+// CARRINHO
 // =========================
 let cart = JSON.parse(localStorage.getItem('cart_demo') || '[]');
 
@@ -11,6 +38,49 @@ function saveCart() {
   localStorage.setItem('cart_demo', JSON.stringify(cart));
 }
 
+// =========================
+// RENDERIZA PRODUTOS NA PÁGINA PRINCIPAL
+// =========================
+function renderProducts() {
+  const container = document.getElementById('product-list');
+  if (!container) return;
+
+  container.innerHTML = '';
+  products.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.name}" />
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      <div class="price">${formatPrice(p.price)}</div>
+      <button class="btn" onclick="addToCart(${p.id})">Adicionar</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// =========================
+// ADICIONAR PRODUTO AO CARRINHO
+// =========================
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+
+  const existing = cart.find(c => c.id === id);
+  if (existing) {
+    existing.q++;
+  } else {
+    cart.push({ ...product, q: 1 });
+  }
+
+  saveCart();
+  alert(`${product.name} adicionado ao carrinho!`);
+}
+
+// =========================
+// FUNÇÕES GLOBAIS PARA O CHECKOUT
+// =========================
 function renderCart() {
   const cartListEl = document.getElementById('cart-list');
   const cartTotalEl = document.getElementById('cart-total');
@@ -44,23 +114,20 @@ function renderCart() {
     `;
     cartListEl.appendChild(row);
   });
-
   cartTotalEl.textContent = formatPrice(total);
 }
 
 function changeQty(id, delta) {
-  id = Number(id);
-  const it = cart.find(c => Number(c.id) === id);
+  const it = cart.find(c => c.id === id);
   if (!it) return;
   it.q += delta;
-  if (it.q < 1) cart = cart.filter(c => Number(c.id) !== id);
+  if (it.q < 1) cart = cart.filter(c => c.id !== id);
   saveCart();
   renderCart();
 }
 
 function removeFromCart(id) {
-  id = Number(id);
-  cart = cart.filter(c => Number(c.id) !== id);
+  cart = cart.filter(c => c.id !== id);
   saveCart();
   renderCart();
 }
@@ -95,7 +162,6 @@ if (checkoutForm) {
       total: cart.reduce((s,i)=>s+i.price*i.q,0),
       date: new Date().toISOString()
     };
-
     const orders = JSON.parse(localStorage.getItem('orders_demo')||'[]');
     orders.push(order);
     localStorage.setItem('orders_demo', JSON.stringify(orders));
@@ -117,10 +183,13 @@ if (checkoutForm) {
   });
 }
 
-// =========================
-// FUNÇÕES GLOBAIS
-// =========================
+// Inicializa produtos e carrinho
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  renderCart();
+});
+
+// Expõe funções globais
+window.addToCart = addToCart;
 window.changeQty = changeQty;
 window.removeFromCart = removeFromCart;
-
-document.addEventListener('DOMContentLoaded', renderCart);
