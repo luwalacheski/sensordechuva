@@ -1,30 +1,40 @@
-// Estado do carrinho
+// =========================
+// CARRINHO DE COMPRAS
+// =========================
+
+// Estado inicial do carrinho
 let cart = JSON.parse(localStorage.getItem('cart_demo') || '[]');
 
+// Formata valores em reais
 function formatPrice(v) {
   return 'R$ ' + v.toFixed(2).replace('.', ',');
 }
 
+// Salva o carrinho no localStorage
 function saveCart() {
   localStorage.setItem('cart_demo', JSON.stringify(cart));
 }
 
-// Renderiza o carrinho
+// Renderiza o carrinho na página
 function renderCart() {
   const cartListEl = document.getElementById('cart-list');
   const cartTotalEl = document.getElementById('cart-total');
-  if (!cartListEl || !cartTotalEl) return;
+  if (!cartListEl || !cartTotalEl) return; // se não houver elementos, não faz nada
 
   cartListEl.innerHTML = '';
+
+  // Se carrinho estiver vazio
   if (cart.length === 0) {
     cartListEl.innerHTML = '<div class="small">Carrinho vazio</div>';
     cartTotalEl.textContent = 'R$ 0,00';
     return;
   }
 
+  // Monta a lista de produtos
   let total = 0;
   cart.forEach(item => {
     total += item.price * item.q;
+
     const row = document.createElement('div');
     row.className = 'cart-row';
     row.innerHTML = `
@@ -44,20 +54,26 @@ function renderCart() {
     cartListEl.appendChild(row);
   });
 
+  // Atualiza total
   cartTotalEl.textContent = formatPrice(total);
 }
 
+// Altera a quantidade de um item no carrinho
 function changeQty(id, delta) {
-  // Converter id para número, caso venha como string
   id = Number(id);
   const it = cart.find(c => Number(c.id) === id);
   if (!it) return;
+
   it.q += delta;
-  if (it.q < 1) cart = cart.filter(c => Number(c.id) !== id);
+  if (it.q < 1) {
+    cart = cart.filter(c => Number(c.id) !== id);
+  }
+
   saveCart();
   renderCart();
 }
 
+// Remove item do carrinho
 function removeFromCart(id) {
   id = Number(id);
   cart = cart.filter(i => Number(i.id) !== id);
@@ -65,8 +81,12 @@ function removeFromCart(id) {
   renderCart();
 }
 
-// Checkout
+// =========================
+// CHECKOUT
+// =========================
+
 const checkoutForm = document.getElementById('checkout-form');
+
 if (checkoutForm) {
   checkoutForm.addEventListener('submit', ev => {
     ev.preventDefault();
@@ -78,16 +98,18 @@ if (checkoutForm) {
     const cidade = document.getElementById('cidade').value.trim();
     const cep = document.getElementById('cep').value.trim();
 
+    // Validação básica
     if (!nome || !cpf || !telefone || !endereco || !cidade || !cep) {
       alert('Preencha todos os campos.');
       return;
     }
 
     if (cart.length === 0) {
-      alert('Carrinho vazio.');
+      alert('Seu carrinho está vazio.');
       return;
     }
 
+    // Monta pedido
     const order = {
       id: 'ORD-' + Date.now(),
       customer: { nome, cpf, telefone, endereco, cidade, cep },
@@ -96,28 +118,36 @@ if (checkoutForm) {
       date: new Date().toISOString()
     };
 
+    // Salva pedido no localStorage
     const orders = JSON.parse(localStorage.getItem('orders_demo') || '[]');
     orders.push(order);
     localStorage.setItem('orders_demo', JSON.stringify(orders));
 
+    // Limpa carrinho
     cart = [];
     saveCart();
     renderCart();
 
+    // Mostra resultado do pedido
     const result = document.getElementById('order-result');
     if (result) {
-      result.innerHTML = `<div style="padding:12px;border-radius:10px;background:#ecfdf5;color:#065f46">
-        <strong>Pedido enviado!</strong><div>ID: ${order.id}</div>
-        <div>Total: ${formatPrice(order.total)}</div></div>`;
+      result.innerHTML = `
+        <div style="padding:12px;border-radius:10px;background:#ecfdf5;color:#065f46">
+          <strong>Pedido enviado!</strong>
+          <div>ID: ${order.id}</div>
+          <div>Total: ${formatPrice(order.total)}</div>
+        </div>`;
     }
 
     alert('Pedido realizado com sucesso! ID: ' + order.id);
   });
 }
 
-// Expor funções globalmente
+// =========================
+// FUNÇÕES GLOBAIS
+// =========================
 window.changeQty = changeQty;
 window.removeFromCart = removeFromCart;
 
-// Inicializa carrinho
+// Inicializa renderização ao carregar
 document.addEventListener('DOMContentLoaded', renderCart);
