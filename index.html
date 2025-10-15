@@ -32,6 +32,8 @@
       margin-left: 20px;
       font-weight: bold;
     }
+
+    /* Layout dos produtos */
     .products {
       display: flex;
       flex-wrap: wrap;
@@ -40,26 +42,48 @@
       margin: 30px auto;
       max-width: 1200px;
     }
+
     .product {
       background: white;
       border-radius: 12px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      padding: 16px;
       width: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
       text-align: center;
+      transition: transform 0.2s;
     }
+
+    .product:hover {
+      transform: translateY(-4px);
+    }
+
     .product img {
       width: 100%;
+      height: 220px;
+      object-fit: cover;
       border-radius: 10px;
     }
+
     .product h3 {
       color: #047857;
-      margin-top: 10px;
+      margin: 10px 0 6px;
+      font-size: 1.2em;
     }
+
     .product p {
-      font-size: 0.95em;
+      font-size: 0.93em;
       color: #444;
+      margin-bottom: 8px;
+      line-height: 1.4em;
     }
+
+    .info {
+      flex-grow: 1;
+    }
+
     .btn {
       margin-top: 10px;
       background: #047857;
@@ -69,16 +93,20 @@
       padding: 10px 15px;
       cursor: pointer;
       font-weight: bold;
+      width: 100%;
     }
+
     .btn:hover {
       background: #065f46;
     }
+
     footer {
       text-align: center;
       padding: 20px;
       font-size: 14px;
       color: #666;
       border-top: 1px solid #ddd;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -99,7 +127,7 @@
   <main>
     <section>
       <h2 style="text-align:center; color:#047857; margin-top:30px;">
-        Componentes do Varal Automático com Sensor de Chuva
+    
       </h2>
 
       <div class="products">
@@ -107,42 +135,48 @@
         <!-- Produto 1 -->
         <div class="product">
           <img src="891_1_H (1).png" alt="Sensor de Chuva FC-37">
-          <h3>Sensor de Chuva FC-37</h3>
-          <p>
-            Este é o <strong>sensor FC-37</strong>, responsável por detectar gotas de chuva.
-            Ele envia um sinal elétrico para o Arduino quando identifica umidade na placa.
-            É o componente principal para ativar o recolhimento automático do varal.
-          </p>
-          <p><strong>Função:</strong> Detectar chuva e acionar o sistema automático.</p>
-          <p><strong>Preço:</strong> R$ 29,90</p>
+          <div class="info">
+            <h3>Sensor de Chuva FC-37</h3>
+            <p>
+              Este é o <strong>sensor FC-37</strong>, responsável por detectar gotas de chuva.
+              Ele envia um sinal elétrico para o Arduino quando identifica umidade na placa.
+              É o componente principal para ativar o recolhimento automático do varal.
+            </p>
+            <p><strong>Função:</strong> Detectar chuva e acionar o sistema automático.</p>
+            <p><strong>Preço:</strong> R$ 29,90</p>
+          </div>
           <button class="btn" onclick="adicionarCarrinho('Sensor de Chuva FC-37', 29.90)">Adicionar</button>
         </div>
 
         <!-- Produto 2 -->
         <div class="product">
-          <img src="esquema-sensor-de-chuva.jpg" alt="Esquema Arduino Nano com sensor de chuva">
-          <h3>Esquema com Arduino Nano</h3>
-          <p>
-            Este circuito mostra como o <strong>sensor FC-37</strong> é conectado ao 
-            <strong>Arduino Nano</strong> e ao display LCD. O sistema identifica a presença
-            de água e mostra no visor a leitura em tempo real.
-          </p>
-          <p><strong>Função:</strong> Exibir os dados de detecção e acionar o motor do varal.</p>
-          <p><strong>Preço:</strong> R$ 149,90</p>
+          <img src="esquema-sensor-de-chuva.jpg" alt="Esquema com Arduino Nano">
+          <div class="info">
+            <h3>Esquema com Arduino Nano</h3>
+            <p>
+              Este circuito mostra como o <strong>sensor FC-37</strong> é conectado ao 
+              <strong>Arduino Nano</strong> e ao display LCD. O sistema identifica a presença
+              de água e mostra no visor a leitura em tempo real.
+            </p>
+            <p><strong>Função:</strong> Exibir os dados de detecção e acionar o motor do varal.</p>
+            <p><strong>Preço:</strong> R$ 149,90</p>
+          </div>
           <button class="btn" onclick="adicionarCarrinho('Kit Arduino Nano com LCD', 149.90)">Adicionar</button>
         </div>
 
         <!-- Produto 3 -->
         <div class="product">
-          <img src="Esquema-do-circuito-sensor-de-chuva-arduino-1.jpg" alt="Circuito completo com Arduino Uno e relé">
-          <h3>Kit Completo com Arduino Uno</h3>
-          <p>
-            Este esquema completo utiliza o <strong>Arduino Uno</strong>, um módulo <strong>relé 5V</strong>,
-            e o sensor FC-37. O relé comanda o motor do varal, recolhendo automaticamente
-            quando começa a chover.
-          </p>
-          <p><strong>Função:</strong> Controlar todo o sistema automático de recolhimento.</p>
-          <p><strong>Preço:</strong> R$ 199,90</p>
+          <img src="Esquema-do-circuito-sensor-de-chuva-arduino-1.jpg" alt="Kit Completo com Arduino Uno">
+          <div class="info">
+            <h3>Kit Completo com Arduino Uno</h3>
+            <p>
+              Este esquema completo utiliza o <strong>Arduino Uno</strong>, um módulo 
+              <strong>relé 5V</strong>, e o sensor FC-37. O relé comanda o motor do varal,
+              recolhendo automaticamente quando começa a chover.
+            </p>
+            <p><strong>Função:</strong> Controlar todo o sistema automático de recolhimento.</p>
+            <p><strong>Preço:</strong> R$ 199,90</p>
+          </div>
           <button class="btn" onclick="adicionarCarrinho('Kit Completo Arduino Uno + Relé + Sensor', 199.90)">Adicionar</button>
         </div>
 
