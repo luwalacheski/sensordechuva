@@ -12,7 +12,8 @@
     .logo { font-weight:bold; font-size:20px; }
     nav a { color:#fff; text-decoration:none; margin-left:20px; font-weight:600; }
     main { max-width:1200px; margin:20px auto; padding:20px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-    .product-card { background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:15px; width:300px; display:flex; flex-direction:column; justify-content:space-between; }
+    .product-card { background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:15px; width:300px; display:flex; flex-direction:column; justify-content:space-between; transition:0.3s; }
+    .product-card:hover { transform:translateY(-4px); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
     .product-card img { max-width:100%; border-radius:6px; margin-bottom:10px; }
     .product-card h3 { margin:0 0 10px 0; color:#047857; }
     .product-card p { font-size:0.9em; color:#555; flex-grow:1; }
@@ -36,7 +37,31 @@
   </header>
 
   <main id="product-list">
-    <!-- Produtos serão adicionados pelo JavaScript -->
+    
+    <div class="product-card">
+      <img src="891_1_H (1).png" alt="Sensor de chuva FC-37">
+      <h3>Sensor de chuva FC-37</h3>
+      <p>Sensor responsável por detectar gotas de água e enviar o sinal ao Arduino para recolher automaticamente o varal.</p>
+      <div class="price">R$ 29,90</div>
+      <button class="btn">Adicionar ao carrinho</button>
+    </div>
+
+    <div class="product-card">
+      <img src="esquema-sensor-de-chuva.jpg" alt="Esquema de ligação do sensor">
+      <h3>Esquema de ligação</h3>
+      <p>Diagrama de montagem do sistema de varal automático com sensor de chuva e display LCD para monitoramento.</p>
+      <div class="price">Projeto educacional</div>
+      <button class="btn">Ver detalhes</button>
+    </div>
+
+    <div class="product-card">
+      <img src="Esquema-do-circuito-sensor-de-chuva-arduino-1.jpg" alt="Circuito completo Arduino UNO">
+      <h3>Circuito completo Arduino UNO</h3>
+      <p>Esquema do circuito utilizando Arduino UNO, módulo relé e sensor FC-37 para acionamento automático do motor.</p>
+      <div class="price">Demonstração técnica</div>
+      <button class="btn">Ver mais</button>
+    </div>
+
   </main>
 
   <footer class="container" style="margin-top:40px;text-align:center;font-size:14px;color:#666;">
