@@ -1,195 +1,214 @@
-// =========================
-// PRODUTOS DISPONÍVEIS
-// =========================
-const products = [
-  {
-    id: 1,
-    name: "VaralAuto Compact",
-    price: 249.90,
-    description: "Módulo sensor de chuva FC-37, detecta gotas de água e aciona sistemas automáticos.",
-    image: "images/varalauto-compact.png"
-  },
-  {
-    id: 2,
-    name: "VaralAuto Pro",
-    price: 399.90,
-    description: "Sensor de chuva com Arduino Nano, display LCD e buzzer para alertas.",
-    image: "images/varalauto-pro.png"
-  },
-  {
-    id: 3,
-    name: "Kit DIY (sensor + código)",
-    price: 99.90,
-    description: "Sistema completo com Arduino Uno, relé e sensor FC-37, ideal para projetos domésticos.",
-    image: "images/kit-diy.png"
-  }
-];
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Compra - VaralAuto</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background:#f9f9f9;
+      margin:0;
+      padding:0;
+    }
 
-// =========================
-// CARRINHO
-// =========================
-let cart = JSON.parse(localStorage.getItem('cart_demo') || '[]');
+    header {
+      background:#047857;
+      color:#fff;
+      padding:20px 0;
+    }
 
-function formatPrice(v) {
-  return 'R$ ' + v.toFixed(2).replace('.', ',');
-}
+    header .container {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      max-width:1200px;
+      margin:auto;
+      padding:0 20px;
+    }
 
-function saveCart() {
-  localStorage.setItem('cart_demo', JSON.stringify(cart));
-}
+    .logo {
+      font-weight:bold;
+      font-size:22px;
+    }
 
-// =========================
-// RENDERIZA PRODUTOS NA PÁGINA PRINCIPAL
-// =========================
-function renderProducts() {
-  const container = document.getElementById('product-list');
-  if (!container) return;
+    nav a {
+      color:#fff;
+      text-decoration:none;
+      margin-left:20px;
+      font-weight:600;
+    }
 
-  container.innerHTML = '';
-  products.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.name}" />
-      <h3>${p.name}</h3>
-      <p>${p.description}</p>
-      <div class="price">${formatPrice(p.price)}</div>
-      <button class="btn" onclick="addToCart(${p.id})">Adicionar</button>
-    `;
-    container.appendChild(card);
-  });
-}
+    main {
+      max-width:900px;
+      margin:30px auto;
+      padding:20px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
 
-// =========================
-// ADICIONAR PRODUTO AO CARRINHO
-// =========================
-function addToCart(id) {
-  const product = products.find(p => p.id === id);
-  if (!product) return;
+    h1, h2 {
+      color:#047857;
+    }
 
-  const existing = cart.find(c => c.id === id);
-  if (existing) {
-    existing.q++;
-  } else {
-    cart.push({ ...product, q: 1 });
-  }
+    .cart-container {
+      border:1px solid #ddd;
+      border-radius:8px;
+      padding:15px;
+      background:#fefefe;
+      margin-bottom:20px;
+    }
 
-  saveCart();
-  alert(`${product.name} adicionado ao carrinho!`);
-}
+    .cart-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:8px 0;
+      border-bottom:1px solid #eee;
+    }
 
-// =========================
-// FUNÇÕES GLOBAIS PARA O CHECKOUT
-// =========================
-function renderCart() {
-  const cartListEl = document.getElementById('cart-list');
-  const cartTotalEl = document.getElementById('cart-total');
-  if (!cartListEl || !cartTotalEl) return;
+    .cart-row:last-child {
+      border-bottom:none;
+    }
 
-  cartListEl.innerHTML = '';
-  if (cart.length === 0) {
-    cartListEl.innerHTML = '<div class="small">Carrinho vazio</div>';
-    cartTotalEl.textContent = 'R$ 0,00';
-    return;
-  }
+    .cart-row strong {
+      color:#000;
+    }
 
-  let total = 0;
-  cart.forEach(item => {
-    total += item.price * item.q;
-    const row = document.createElement('div');
-    row.className = 'cart-row';
-    row.innerHTML = `
-      <div>
-        <div style="font-weight:600">${item.name}</div>
-        <div class="small">${item.q} x ${formatPrice(item.price)}</div>
+    .total {
+      text-align:right;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    form {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap:15px;
+      margin-top:20px;
+    }
+
+    label {
+      font-weight:600;
+      color:#333;
+      display:flex;
+      flex-direction:column;
+      font-size:0.95em;
+    }
+
+    input {
+      padding:10px;
+      border-radius:6px;
+      border:1px solid #ccc;
+      margin-top:4px;
+      font-size:1em;
+    }
+
+    .btn-container {
+      grid-column:1 / -1;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .btn {
+      padding:10px 20px;
+      background:#047857;
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      transition:0.2s;
+    }
+
+    .btn:hover {
+      background:#065f46;
+    }
+
+    .btn-secondary {
+      background:#e5e7eb;
+      color:#333;
+    }
+
+    .btn-secondary:hover {
+      background:#d1d5db;
+    }
+
+    footer {
+      margin-top:40px;
+      text-align:center;
+      font-size:14px;
+      color:#666;
+      padding-bottom:20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="logo">VaralAuto</div>
+      <nav>
+        <a href="index.html">Produtos</a>
+        <a href="sobre.html">Sobre nós</a>
+        <a href="contato.html">Contato</a>
+        <a href="checkout.html">Carrinho</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Finalizar compra</h1>
+    <p>Preencha seus dados para concluir o pedido.</p>
+
+    <h2>Seu Carrinho</h2>
+    <div class="cart-container">
+      <div class="cart-row">
+        <span>VaralAuto Compact</span>
+        <strong>R$ 249,90</strong>
       </div>
-      <div style="text-align:right">
-        <div style="margin-bottom:6px">${formatPrice(item.price * item.q)}</div>
-        <div>
-          <button class="btn ghost" onclick="changeQty(${item.id}, -1)">-</button>
-          <button class="btn ghost" onclick="changeQty(${item.id}, 1)">+</button>
-          <button class="btn ghost" onclick="removeFromCart(${item.id})">Remover</button>
-        </div>
+      <div class="cart-row">
+        <span>VaralAuto Pro</span>
+        <strong>R$ 399,90</strong>
       </div>
-    `;
-    cartListEl.appendChild(row);
-  });
-  cartTotalEl.textContent = formatPrice(total);
-}
+      <div class="total">Total: R$ 649,80</div>
+    </div>
 
-function changeQty(id, delta) {
-  const it = cart.find(c => c.id === id);
-  if (!it) return;
-  it.q += delta;
-  if (it.q < 1) cart = cart.filter(c => c.id !== id);
-  saveCart();
-  renderCart();
-}
+    <h2>Dados para Entrega</h2>
+    <form id="checkout-form">
+      <label>Nome completo:
+        <input type="text" id="nome" required placeholder="Seu nome completo">
+      </label>
+      <label>CPF:
+        <input type="text" id="cpf" required placeholder="000.000.000-00">
+      </label>
+      <label>Telefone:
+        <input type="text" id="telefone" required placeholder="(00) 00000-0000">
+      </label>
+      <label>Endereço:
+        <input type="text" id="endereco" required placeholder="Rua, número, bairro">
+      </label>
+      <label>Cidade:
+        <input type="text" id="cidade" required placeholder="Cidade">
+      </label>
+      <label>CEP:
+        <input type="text" id="cep" required placeholder="00000-000">
+      </label>
 
-function removeFromCart(id) {
-  cart = cart.filter(c => c.id !== id);
-  saveCart();
-  renderCart();
-}
+      <div class="btn-container">
+        <button type="submit" class="btn">Finalizar Compra</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='carrinho.html'">Voltar ao carrinho</button>
+      </div>
+    </form>
+  </main>
 
-// =========================
-// CHECKOUT
-// =========================
-const checkoutForm = document.getElementById('checkout-form');
-if (checkoutForm) {
-  checkoutForm.addEventListener('submit', ev => {
-    ev.preventDefault();
-    const nome = document.getElementById('nome').value.trim();
-    const cpf = document.getElementById('cpf').value.trim();
-    const telefone = document.getElementById('telefone').value.trim();
-    const endereco = document.getElementById('endereco').value.trim();
-    const cidade = document.getElementById('cidade').value.trim();
-    const cep = document.getElementById('cep').value.trim();
+  <footer>
+    VaralAuto — sistema de varal automático com sensor de chuva.
+  </footer>
 
-    if (!nome || !cpf || !telefone || !endereco || !cidade || !cep) {
-      alert('Preencha todos os campos.');
-      return;
-    }
-    if (cart.length === 0) {
-      alert('Seu carrinho está vazio.');
-      return;
-    }
-
-    const order = {
-      id: 'ORD-' + Date.now(),
-      customer: { nome, cpf, telefone, endereco, cidade, cep },
-      items: cart,
-      total: cart.reduce((s,i)=>s+i.price*i.q,0),
-      date: new Date().toISOString()
-    };
-    const orders = JSON.parse(localStorage.getItem('orders_demo')||'[]');
-    orders.push(order);
-    localStorage.setItem('orders_demo', JSON.stringify(orders));
-
-    cart = [];
-    saveCart();
-    renderCart();
-
-    const result = document.getElementById('order-result');
-    if (result) {
-      result.innerHTML = `
-        <div>
-          Obrigado pela preferência!<br>
-          Pedido finalizado.<br>
-          ID do pedido: ${order.id}<br>
-          Total: ${formatPrice(order.total)}
-        </div>`;
-    }
-  });
-}
-
-// Inicializa produtos e carrinho
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts();
-  renderCart();
-});
-
-// Expõe funções globais
-window.addToCart = addToCart;
-window.changeQty = changeQty;
-window.removeFromCart = removeFromCart;
+</body>
+</html>
