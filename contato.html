@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contato e Finalizar Compra</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.5; background:#f9f9f9; }
+    header { text-align:center; padding:20px 0; background:#047857; color:#fff; border-radius:0 0 10px 10px; }
+    main { max-width:600px; margin:20px auto; padding:20px; background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    h2 { margin-top:30px; color:#047857; }
+    label { display:flex; flex-direction:column; font-weight:600; margin-bottom:10px; }
+    input { padding:8px; border-radius:6px; border:1px solid #ccc; margin-top:4px; }
+    .btn { padding:10px; background:#047857; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600; transition:0.2s; }
+    .btn:hover { background:#065f46; }
+    #order-result { padding:12px; border-radius:10px; margin-top:20px; text-align:center; font-weight:bold; color:#065f46; background:#ecfdf5; }
+    .cart-container { border:1px solid #ddd; border-radius:8px; padding:10px; background:#fefefe; }
+    .cart-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee; }
+    .cart-row:last-child { border-bottom:none; }
+    .small { font-size:0.9em; color:#555; }
+  </style>
 </head>
 <body>
 
@@ -12,56 +27,40 @@
     <h1>Finalizar Compra</h1>
   </header>
 
-  <main style="max-width:600px;margin:auto;padding:20px;">
-    
+  <main>
     <!-- Lista do carrinho -->
     <h2>Seu Carrinho</h2>
-    <div id="cart-list" class="cart-container" style="margin-bottom:20px;"></div>
+    <div id="cart-list" class="cart-container"></div>
     <div style="text-align:right;font-weight:bold;margin-bottom:30px;">
       Total: <span id="cart-total">R$ 0,00</span>
     </div>
 
     <!-- Formulário de contato/checkout -->
     <h2>Dados para Entrega</h2>
-    <form id="checkout-form" style="display:flex;flex-direction:column;gap:10px;">
-      <label>
-        Nome completo:
+    <form id="checkout-form">
+      <label>Nome completo:
         <input type="text" id="nome" required placeholder="Seu nome completo">
       </label>
-
-      <label>
-        CPF:
+      <label>CPF:
         <input type="text" id="cpf" required placeholder="000.000.000-00">
       </label>
-
-      <label>
-        Telefone:
+      <label>Telefone:
         <input type="text" id="telefone" required placeholder="(00) 00000-0000">
       </label>
-
-      <label>
-        Endereço:
+      <label>Endereço:
         <input type="text" id="endereco" required placeholder="Rua, número, bairro">
       </label>
-
-      <label>
-        Cidade:
+      <label>Cidade:
         <input type="text" id="cidade" required placeholder="Cidade">
       </label>
-
-      <label>
-        CEP:
+      <label>CEP:
         <input type="text" id="cep" required placeholder="00000-000">
       </label>
-
-      <button type="submit" class="btn" style="margin-top:10px;padding:10px;background:#047857;color:#fff;border:none;border-radius:8px;cursor:pointer;">
-        Finalizar Compra
-      </button>
+      <button type="submit" class="btn">Finalizar Compra</button>
     </form>
 
     <!-- Resultado do pedido -->
-    <div id="order-result" style="margin-top:20px;"></div>
-
+    <div id="order-result"></div>
   </main>
 
   <footer style="margin-top:40px;text-align:center;font-size:14px;color:#666;">
