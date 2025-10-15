@@ -1,21 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VaralAuto — Varal de Roupas Automático</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VaralAuto — Produtos</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f9f9f9; margin:0; padding:0; }
+    header { background:#047857; color:#fff; padding:20px 0; }
+    header .container { display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:auto; padding:0 20px; }
+    .logo { font-weight:bold; font-size:20px; }
+    nav a { color:#fff; text-decoration:none; margin-left:20px; font-weight:600; }
+    main { max-width:1200px; margin:20px auto; padding:20px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+    .product-card { background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:15px; width:300px; display:flex; flex-direction:column; justify-content:space-between; }
+    .product-card img { max-width:100%; border-radius:6px; margin-bottom:10px; }
+    .product-card h3 { margin:0 0 10px 0; color:#047857; }
+    .product-card p { font-size:0.9em; color:#555; flex-grow:1; }
+    .product-card .price { font-weight:bold; margin:10px 0; }
+    .btn { padding:10px; background:#047857; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600; transition:0.2s; text-align:center; }
+    .btn:hover { background:#065f46; }
+  </style>
 </head>
 <body>
+
   <header>
-    <div class="container" style="display:flex;align-items:center">
-      <div class="site-title">
-        <div class="logo">VA</div>
-        <div>
-          <div style="font-weight:700">VaralAuto</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.8)">Solução automática para dias de chuva</div>
-        </div>
-      </div>
+    <div class="container">
+      <div class="logo">VaralAuto</div>
       <nav>
         <a href="index.html">Produtos</a>
         <a href="sobre.html">Sobre nós</a>
@@ -25,78 +35,14 @@
     </div>
   </header>
 
-  <div class="container">
-    <main>
-      <section>
-        <div class="card" id="produtos">
-          <h1>Varal automático com sensor de chuva</h1>
-          <p class="small">Quando chove, um sensor detecta a água e o varal é recolhido automaticamente — controlado por um Arduino. Projetado para facilitar sua rotina e proteger as roupas.</p>
+  <main id="product-list">
+    <!-- Produtos serão adicionados pelo JavaScript -->
+  </main>
 
-          <h2 style="margin-top:14px">Nossos modelos</h2>
+  <footer class="container" style="margin-top:40px;text-align:center;font-size:14px;color:#666;">
+    VaralAuto — sistema de varal automático com sensor de chuva.
+  </footer>
 
-          <div class="products" id="product-list">
-            
-            <!-- Produto 1 -->
-            <div class="product-card">
-              <img src="891_1_H (1).png" alt="Sensor de chuva FC-37 com módulo" class="product-image">
-              <h3>VaralAuto Compact</h3>
-              <p class="small">Este é o módulo sensor de chuva FC-37, composto por uma placa sensora e um módulo de controle.
-A placa detecta a presença de gotas de água através da variação de condutividade elétrica na superfície metálica.
-O módulo eletrônico (à direita) interpreta o sinal e o envia ao Arduino, permitindo acionar sistemas automáticos como o recolhimento do varal em caso de chuva.</p>
-              <p class="price">R$ 249,90</p>
-              <button class="btn">Adicionar</button>
-            </div>
-
-            <!-- Produto 2 -->
-            <div class="product-card">
-              <img src="Esquema-do-circuito-sensor-de-chuva-arduino-1.jpg" alt="Esquema de ligação com Arduino Nano" class="product-image">
-              <h3>VaralAuto Pro</h3>
-              <p class="small">Neste diagrama, o sensor de chuva está conectado a um Arduino Nano, um display LCD I2C e um buzzer.
-O circuito mostra como o Arduino lê o sinal do sensor e exibe a informação no display.
-O buzzer pode emitir um alerta sonoro quando a chuva é detectada, permitindo o controle automático do sistema.
-É um exemplo compacto e ideal para protótipos ou versões portáteis do VaralAuto.</p>
-              <p class="price">R$ 399,90</p>
-              <button class="btn">Adicionar</button>
-            </div>
-
-            <!-- Produto 3 -->
-            <div class="product-card">
-              <img src="esquema-sensor-de-chuva.jpg" alt="Esquema completo com Arduino Uno e relé" class="product-image">
-              <h3>Kit DIY (sensor + código)</h3>
-              <p class="small">Este circuito mostra o sistema completo de detecção de chuva utilizando Arduino Uno, display LCD, módulo relé e sensor FC-37.
-O relé é responsável por acionar motores ou outros dispositivos elétricos, como o motor do varal automático.
-Quando a chuva é detectada, o relé desliga o motor (ou recolhe o varal), e o display exibe o status atual.
-É o modelo ideal para versões domésticas completas do projeto VaralAuto.</p>
-              <p class="price">R$ 99,90</p>
-              <button class="btn">Adicionar</button>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <aside>
-        <div class="card">
-          <h2>Carrinho</h2>
-          <div class="cart-items" id="cart-list"></div>
-          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="small">Total:</div>
-              <div id="cart-total" style="font-weight:700">R$ 0,00</div>
-            </div>
-            <div>
-              <a class="btn" href="checkout.html">Finalizar</a>
-            </div>
-          </div>
-        </div>
-      </aside>
-    </main>
-
-    <footer class="container">
-      <div class="small">Demo de e-commerce — nenhum pagamento real é processado.</div>
-    </footer>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="carrinho.js"></script>
 </body>
 </html>
