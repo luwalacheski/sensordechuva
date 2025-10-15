@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Finalizar compra — VaralAuto</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Checkout — VaralAuto</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
@@ -20,35 +20,42 @@
         <a href="index.html">Produtos</a>
         <a href="sobre.html">Sobre nós</a>
         <a href="contato.html">Contato</a>
-        <a href="checkout.html">Carrinho</a>
+        <a href="carrinho.html">Carrinho</a>
       </nav>
     </div>
   </header>
 
   <div class="container">
-    <div class="card" id="checkout">
-      <h2>Finalizar compra</h2>
-      <form id="checkout-form">
-        <label>Nome completo</label>
-        <input type="text" id="nome" required />
-        <label>CPF</label>
-        <input type="text" id="cpf" maxlength="11" required />
-        <label>Telefone</label>
-        <input type="text" id="telefone" placeholder="(xx) xxxxx-xxxx" required />
-        <label>Endereço (Rua, Número)</label>
-        <input type="text" id="endereco" required />
-        <label>Cidade</label>
-        <input type="text" id="cidade" required />
-        <label>CEP</label>
-        <input type="text" id="cep" required />
-        <button class="btn" type="submit">Enviar pedido</button>
-      </form>
-      <div id="order-result" style="margin-top:12px"></div>
-    </div>
+    <main>
+      <section class="card">
+        <h1>Finalizar compra</h1>
+        <p class="small">Preencha seus dados para concluir o pedido.</p>
+
+        <form id="checkout-form">
+          <label>Nome completo</label>
+          <input type="text" id="nome" required />
+          <label>CPF</label>
+          <input type="text" id="cpf" placeholder="Somente números" maxlength="11" required />
+          <label>Telefone</label>
+          <input type="text" id="telefone" placeholder="(xx) xxxxx-xxxx" required />
+          <label>Endereço</label>
+          <input type="text" id="endereco" required />
+          <label>Cidade</label>
+          <input type="text" id="cidade" required />
+          <label>CEP</label>
+          <input type="text" id="cep" required />
+
+          <button type="submit" class="btn">Enviar pedido</button>
+          <a href="carrinho.html" class="btn ghost">Voltar ao carrinho</a>
+        </form>
+
+        <div id="order-result" style="margin-top:16px"></div>
+      </section>
+    </main>
   </div>
 
   <footer class="container">
-    <div class="small">© 2025 VaralAuto — Todos os direitos reservados.</div>
+    <div class="small">VaralAuto — sistema de varal automático com sensor de chuva.</div>
   </footer>
 
   <script src="script.js"></script>
