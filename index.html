@@ -3,63 +3,156 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VaralAuto - Início</title>
+  <title>VaralAuto - Peças e Montagem</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #047857;
+      color: white;
+      padding: 20px 0;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px auto;
+      max-width: 1200px;
+    }
+    .product {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      padding: 16px;
+      width: 340px;
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .product h3 {
+      color: #047857;
+      margin-top: 10px;
+    }
+    .product p {
+      font-size: 0.95em;
+      color: #444;
+    }
+    .btn {
+      margin-top: 10px;
+      background: #047857;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn:hover {
+      background: #065f46;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <div class="logo">VaralAuto</div>
-    <nav>
-      <a href="index.html">Produtos</a>
-      <a href="sobre.html">Sobre</a>
-      <a href="contato.html">Contato</a>
-      <a href="carrinho.html">Carrinho</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <section>
-    <h2>Peças para o Projeto</h2>
-    <div class="products">
-
-      <!-- Produto 1 -->
-      <div class="product">
-        <img src="https://www.filipeflop.com/wp-content/uploads/2017/06/sensor-chuva-fc37-arduino-01.jpg" alt="Sensor de chuva FC-37">
-        <h3>Sensor de Chuva FC-37</h3>
-        <p>Detecta gotas de água e envia o sinal para o Arduino recolher o varal automaticamente.</p>
-        <p><strong>R$ 29,90</strong></p>
-        <button class="btn" onclick="adicionarCarrinho('Sensor de Chuva FC-37', 29.90)">Adicionar</button>
-      </div>
-
-      <!-- Produto 2 -->
-      <div class="product">
-        <img src="https://cdn.sparkfun.com/assets/parts/1/1/4/7/2/14318-Arduino_Nano-01.jpg" alt="Arduino Nano">
-        <h3>Arduino Nano</h3>
-        <p>Microcontrolador que processa os dados do sensor e controla o motor do varal.</p>
-        <p><strong>R$ 89,90</strong></p>
-        <button class="btn" onclick="adicionarCarrinho('Arduino Nano', 89.90)">Adicionar</button>
-      </div>
-
-      <!-- Produto 3 -->
-      <div class="product">
-        <img src="https://www.baudaeletronica.com.br/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/m/o/modulo-rele-1-canal-5v-arduino-1_1.jpg" alt="Módulo Relé 5V">
-        <h3>Módulo Relé 5V</h3>
-        <p>Responsável por acionar o motor do varal de forma automática e segura.</p>
-        <p><strong>R$ 19,90</strong></p>
-        <button class="btn" onclick="adicionarCarrinho('Módulo Relé 5V', 19.90)">Adicionar</button>
-      </div>
-
+  <header>
+    <div class="container">
+      <div class="logo">VaralAuto</div>
+      <nav>
+        <a href="index.html">Produtos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+        <a href="carrinho.html">Carrinho</a>
+      </nav>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer>
-  © 2025 VaralAuto — Sistema de varal automático com sensor de chuva.
-</footer>
+  <main>
+    <section>
+      <h2 style="text-align:center; color:#047857; margin-top:30px;">
+        Componentes do Varal Automático com Sensor de Chuva
+      </h2>
+
+      <div class="products">
+
+        <!-- Produto 1 -->
+        <div class="product">
+          <img src="891_1_H (1).png" alt="Sensor de Chuva FC-37">
+          <h3>Sensor de Chuva FC-37</h3>
+          <p>
+            Este é o <strong>sensor FC-37</strong>, responsável por detectar gotas de chuva.
+            Ele envia um sinal elétrico para o Arduino quando identifica umidade na placa.
+            É o componente principal para ativar o recolhimento automático do varal.
+          </p>
+          <p><strong>Função:</strong> Detectar chuva e acionar o sistema automático.</p>
+          <p><strong>Preço:</strong> R$ 29,90</p>
+          <button class="btn" onclick="adicionarCarrinho('Sensor de Chuva FC-37', 29.90)">Adicionar</button>
+        </div>
+
+        <!-- Produto 2 -->
+        <div class="product">
+          <img src="esquema-sensor-de-chuva.jpg" alt="Esquema Arduino Nano com sensor de chuva">
+          <h3>Esquema com Arduino Nano</h3>
+          <p>
+            Este circuito mostra como o <strong>sensor FC-37</strong> é conectado ao 
+            <strong>Arduino Nano</strong> e ao display LCD. O sistema identifica a presença
+            de água e mostra no visor a leitura em tempo real.
+          </p>
+          <p><strong>Função:</strong> Exibir os dados de detecção e acionar o motor do varal.</p>
+          <p><strong>Preço:</strong> R$ 149,90</p>
+          <button class="btn" onclick="adicionarCarrinho('Kit Arduino Nano com LCD', 149.90)">Adicionar</button>
+        </div>
+
+        <!-- Produto 3 -->
+        <div class="product">
+          <img src="Esquema-do-circuito-sensor-de-chuva-arduino-1.jpg" alt="Circuito completo com Arduino Uno e relé">
+          <h3>Kit Completo com Arduino Uno</h3>
+          <p>
+            Este esquema completo utiliza o <strong>Arduino Uno</strong>, um módulo <strong>relé 5V</strong>,
+            e o sensor FC-37. O relé comanda o motor do varal, recolhendo automaticamente
+            quando começa a chover.
+          </p>
+          <p><strong>Função:</strong> Controlar todo o sistema automático de recolhimento.</p>
+          <p><strong>Preço:</strong> R$ 199,90</p>
+          <button class="btn" onclick="adicionarCarrinho('Kit Completo Arduino Uno + Relé + Sensor', 199.90)">Adicionar</button>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 VaralAuto — Sistema de varal automático com sensor de chuva.
+  </footer>
 
 </body>
 </html>
